@@ -31,7 +31,18 @@
                 <input type="password" name="password" id="password" placeholder="Password" required>
                 <label for="password">Password</label>
             </div>
-            
+            <div class="input-group">
+                <i class="fas fa-user-tag"></i>
+                <select name="role" id="role" required>
+                    <option value="" disabled selected>Select Your Role</option>
+                    <option value="Traveler">Traveler</option>
+                    <option value="Travel Agent">Travel Agent</option>
+                    <option value="Hotel Operator">Hotel Operator</option>
+                    <option value="Bus Operator">Bus Operator</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                <label for="role">Role</label>
+            </div>
             <input type="submit" class="btn" value="Sign Up" name="signUp">
         </form>
     </div>
@@ -49,18 +60,7 @@
                 <input type="password" name="password" id="password" placeholder="Password" required>
                 <label for="password">Password</label>
             </div>
-            <div class="input-group">
-                <i class="fas fa-user-tag"></i>
-                <select name="role" id="role" required>
-                    <option value="" disabled selected>Select Your Role</option>
-                    <option value="Traveler">Traveler</option>
-                    <option value="Travel Agent">Travel Agent</option>
-                    <option value="Hotel Operator">Hotel Operator</option>
-                    <option value="Bus Operator">Bus Operator</option>
-                    <option value="Admin">Admin</option>
-                </select>
-                <label for="role">Role</label>
-            </div>
+            
             <input type="submit" class="btn" value="Sign In" name="signIn">
         </form>
     </div>

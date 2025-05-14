@@ -87,7 +87,7 @@ if (isset($_GET['delete_id'])) {
                 <li><a href="hotels.php"><i class="fas fa-hotel"></i> Hotels</a></li>
                 <li><a href="buses.php"><i class="fas fa-bus"></i> Buses</a></li>
                 <li><a href="users.php" class="active"><i class="fas fa-users"></i> Users</a></li>
-                <li><a href="settings.php"><i class="fas fa-chart-bar"></i> Settings</a></li>
+                <li><a href="settings.php"><i class="fas fa-cog"></i> Settings</a></li>
                 <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </div>

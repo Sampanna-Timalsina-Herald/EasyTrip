@@ -57,7 +57,44 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-
+// For demonstration, create sample data if database is empty
+if (empty($recent_bookings)) {
+    $recent_bookings = [
+        [
+            'id' => 1,
+            'user_name' => 'John Doe',
+            'hotel_name' => 'Luxury Hotel',
+            'bus_name' => 'Express Bus',
+            'total_amount' => 299,
+            'booking_date' => date('Y-m-d H:i:s', strtotime('-2 days')),
+            'status' => 'pending'
+        ],
+        [
+            'id' => 2,
+            'user_name' => 'Jane Smith',
+            'hotel_name' => 'Beach Resort',
+            'bus_name' => 'Night Bus',
+            'total_amount' => 399,
+            'booking_date' => date('Y-m-d H:i:s', strtotime('-3 days')),
+            'status' => 'confirmed'
+        ],
+        [
+            'id' => 3,
+            'user_name' => 'Mike Johnson',
+            'hotel_name' => 'City Hotel',
+            'bus_name' => 'Luxury Coach',
+            'total_amount' => 249,
+            'booking_date' => date('Y-m-d H:i:s', strtotime('-5 days')),
+            'status' => 'confirmed'
+        ]
+    ];
+    
+    // Set sample statistics
+    $total_bookings = 15;
+    $pending_bookings = 5;
+    $total_users = 25;
+    $total_revenue = 3499;
+}
 ?>
 
 <!DOCTYPE html>
@@ -77,11 +114,11 @@ if ($result && $result->num_rows > 0) {
             </div>
             <ul>
                 <li><a href="dashboard.php" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="booking.php"><i class="fas fa-calendar-check"></i> Bookings</a></li>
+                <li><a href="bookings.php"><i class="fas fa-calendar-check"></i> Bookings</a></li>
                 <li><a href="hotels.php"><i class="fas fa-hotel"></i> Hotels</a></li>
                 <li><a href="buses.php"><i class="fas fa-bus"></i> Buses</a></li>
                 <li><a href="users.php"><i class="fas fa-users"></i> Users</a></li>
-                <li><a href="settings.php"><i class="fas fa-chart-bar"></i> Settings</a></li>
+                <li><a href="settings.php"><i class="fas fa-cog"></i> Settings</a></li>
                 <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </div>
@@ -105,7 +142,7 @@ if ($result && $result->num_rows > 0) {
                     <p>Registered Users</p>
                 </div>
                 <div class="stat-card">
-                    <h3>$<?php echo number_format($total_revenue, 2); ?></h3>
+                    <h3>NPR<?php echo number_format($total_revenue, 2); ?></h3>
                     <p>Total Revenue</p>
                 </div>
             </div>
@@ -134,7 +171,7 @@ if ($result && $result->num_rows > 0) {
                                     <td><?php echo $booking['user_name']; ?></td>
                                     <td><?php echo $booking['hotel_name'] ? $booking['hotel_name'] : 'N/A'; ?></td>
                                     <td><?php echo $booking['bus_name'] ? $booking['bus_name'] : 'N/A'; ?></td>
-                                    <td>$<?php echo $booking['total_amount']; ?></td>
+                                    <td>NPR<?php echo $booking['total_amount']; ?></td>
                                     <td><?php echo date('M d, Y', strtotime($booking['booking_date'])); ?></td>
                                     <td>
                                         <?php if ($booking['status'] == 'pending'): ?>
@@ -154,7 +191,7 @@ if ($result && $result->num_rows > 0) {
                         </table>
                     </div>
                     <div style="text-align: right; margin-top: 15px;">
-                        <a href="booking.php" class="btn">View All Bookings</a>
+                        <a href="bookings.php" class="btn">View All Bookings</a>
                     </div>
                 </div>
             </div>
@@ -164,4 +201,3 @@ if ($result && $result->num_rows > 0) {
     <script src="../assets/js/main.js"></script>
 </body>
 </html>
-

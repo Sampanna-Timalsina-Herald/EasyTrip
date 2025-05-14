@@ -35,17 +35,29 @@ if (!$hotel && $hotel_id > 0) {
 // Fetch hotel amenities
 $amenities = [];
 if ($hotel_id > 0) {
-    $result = $conn->query("SELECT * FROM hotel_amenities WHERE hotel_id = $hotel_id");
+    // Get distinct amenities for all rooms in this hotel
+    $stmt = $conn->prepare("
+        SELECT DISTINCT ra.amenity_name 
+        FROM room_amenities ra
+        INNER JOIN hotel_rooms hr ON ra.room_id = hr.id
+        WHERE hr.hotel_id = ?
+    ");
+    $stmt->bind_param("i", $hotel_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $amenities[] = $row['name'];
+            $amenities[] = $row['amenity_name'];
         }
     }
+    $stmt->close();
 }
 
 // For demonstration, create sample amenities if none exist
 if (empty($amenities)) {
-    $amenities = ['Free WiFi', 'Swimming Pool', 'Fitness Center', 'Restaurant', 'Room Service', 'Parking', 'Air Conditioning', 'Spa'];
+    $amenities = ['Free WiFi', 'Swimming Pool', 'Fitness Center', 'Restaurant', 
+                 'Room Service', 'Parking', 'Air Conditioning', 'Spa'];
 }
 
 // Fetch available room types
@@ -83,6 +95,10 @@ if (empty($room_types)) {
 
 <section class="section">
     <div class="container">
+        <div class="back-button-container">
+            <a href="myhotels.php" class="btn"><i class="fas fa-arrow-left"></i> Back to My Hotels</a>
+        </div>
+        
         <?php if ($hotel): ?>
             <div class="hotel-details">
                 <div class="hotel-header">
@@ -91,7 +107,24 @@ if (empty($room_types)) {
                 </div>
                 
                 <div class="hotel-gallery">
-                    <img src="<?php echo $hotel['image_url'] ? $hotel['image_url'] : '/placeholder.svg?height=400&width=800'; ?>" alt="<?php echo $hotel['name']; ?>" class="main-image">
+                    <div class="hotel-img">
+                        <?php 
+                        // Process the image URL to use format: uploads/filename.ext (without leading slash)
+                        $image_url = '';
+                        if (!empty($hotel['image_url'])) {
+                            // Extract just the filename from the path
+                            $filename = basename($hotel['image_url']);
+                            // Create the path in format uploads/filename.ext (no leading slash)
+                            $image_url = "uploads/" . $filename;
+                        }
+                        ?>
+                        
+                        <?php if (!empty($hotel['image_url'])): ?>
+                            <img src="<?php echo $image_url; ?>" alt="<?php echo $hotel['name']; ?>">
+                        <?php else: ?>
+                            <img src="../assets/images/hotel-placeholder.jpg" alt="Hotel Image">
+                        <?php endif; ?>
+                    </div>
                 </div>
                 
                 <div class="hotel-info">
@@ -113,7 +146,7 @@ if (empty($room_types)) {
                         <div class="booking-card">
                             <h3>Book Your Stay</h3>
                             <div class="price-info">
-                                <span class="price">$<?php echo $hotel['price_per_night']; ?></span>
+                                <span class="price">NPR <?php echo $hotel['price_per_night']; ?></span>
                                 <span class="per-night">per night</span>
                             </div>
                             
@@ -146,7 +179,7 @@ if (empty($room_types)) {
                                     <select id="room-type" name="room_type" class="form-control">
                                         <?php foreach ($room_types as $room): ?>
                                             <option value="<?php echo $room['room_type']; ?>">
-                                                <?php echo $room['room_type']; ?> - $<?php echo $room['price_per_night']; ?>/night
+                                                <?php echo $room['room_type']; ?> - NPR <?php echo $room['price_per_night']; ?>/night
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
@@ -208,6 +241,10 @@ if (empty($room_types)) {
 
 <style>
 /* Additional styles for hotel details page */
+.back-button-container {
+    margin-bottom: 20px;
+}
+
 .hotel-details {
     margin-bottom: 40px;
 }
@@ -230,10 +267,12 @@ if (empty($room_types)) {
     margin-bottom: 30px;
 }
 
-.main-image {
+.hotel-img img {
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-height: 500px;
+    object-fit: cover;
 }
 
 .hotel-info {
@@ -369,4 +408,3 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <?php include 'includes/footer.php'; ?>
-

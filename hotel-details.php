@@ -96,7 +96,7 @@ if (empty($room_types)) {
 <section class="section">
     <div class="container">
         <div class="back-button-container">
-            <a href="myhotels.php" class="btn"><i class="fas fa-arrow-left"></i> Back to My Hotels</a>
+            <a href="hotels.php" class="btn"><i class="fas fa-arrow-left"></i> Back to My Hotels</a>
         </div>
         
         <?php if ($hotel): ?>

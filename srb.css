@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.srb h1 {
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+}
+
+.srb form {
+    display: flex;
+    flex-direction: column;
+}
+
+.srb label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.srb input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.srb button {
+    padding: 10px;
+    background-color: gray;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.srb button:hover {
+    background-color: rgb(179, 179, 179);
+}
+
+.srb #results {
+    margin-top: 20px;
+}
+.srb #guesthouseSearchForm, .srb #busTicketSearchForm {
+	background: #000;
+	padding: 20px ;
+	border-radius: 15px;
+	text-align: center;
+    margin: 20px 0;
+    border: 1px solid grap;
+}
+.srb #guesthouseSearchForm h2, .srb #busTicketSearchForm h2{
+	color: #fff;
+    font-weight: bold;
+}
+.srb .search_result
+{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.srb .guesthouse, .srb .ticket{
+	border: 1px solid #000;
+	border-radius: 15px;
+	padding: 15px;
+}
+.srb .gimg{
+	width: 100%;
+    text-align: center;
+    overflow: hidden;
+    height: 150px;
+    border-radius: 10px;
+}
+.srb .gimg .guesthouse img
+{
+    object-fit: cover;
+}
+.srb .book_cta {
+	color: #fff;
+	background: #000;
+	padding: 10px;
+	margin: 10px 0;
+	width: 100px;
+	border-radius: 10px;
+}
+.srb .book_cta a
+{
+    color: #fff;
+}
+.srb .ticket_operator h4
+{
+    font-weight: 600;
+}
